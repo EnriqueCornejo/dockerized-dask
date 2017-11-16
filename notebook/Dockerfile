@@ -10,6 +10,7 @@ RUN conda create -n dask --yes -c conda-forge \
     'notebook=5.0.*' \
     'jupyterhub=0.7.*' \
     'jupyterlab=0.24.*' \
+    'python=3.6.3' \
     && conda clean -tipsy
 ENV PATH=/opt/conda/envs/dask/bin:$PATH
 
