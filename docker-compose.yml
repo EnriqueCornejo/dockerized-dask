@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     image: daskdev/dask
     hostname: dask-scheduler
+    volumes:
+      - ./temp:/temp
     ports:
       - "8786:8786"
       - "8787:8787"
@@ -19,7 +21,8 @@ services:
     ports:
       - "8789:8789"
     command: ["bash", "-c", "/usr/bin/prepare.sh && exec dask-worker scheduler:8786"]
-
+    volumes:
+      - ./temp:/temp
   notebook:
     build:
       context: .
@@ -27,7 +30,7 @@ services:
     image: daskdev/base-notebook
     hostname: notebook
     ports:
-      - "8888:8888"
+      - "8889:8888"
     volumes:
       - .:/home/jovyan
-      
+      - ./temp:/temp
