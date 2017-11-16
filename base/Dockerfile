@@ -7,7 +7,7 @@ RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/
 RUN chmod +x /usr/local/bin/dumb-init
 
 RUN conda create -n dask --yes -c conda-forge \
-    dask distributed numpy scipy pandas numba nomkl fastparquet s3fs zict bcolz blosc cytoolz netCDF4 graphviz \
+    dask distributed numpy scipy pandas numba nomkl fastparquet s3fs zict bcolz blosc cytoolz netCDF4 graphviz matplotlib \
     && conda clean -tipsy
 ENV PATH=/opt/conda/envs/dask/bin:$PATH
 
