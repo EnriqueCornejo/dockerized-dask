@@ -5,32 +5,59 @@ services:
     build:
       context: ./base
       dockerfile: Dockerfile
-    image: daskdev/dask
     hostname: dask-scheduler
     volumes:
       - ./temp:/temp
     ports:
       - "8786:8786"
       - "8787:8787"
-  worker:
+  worker_one:
     build:
       context: ./base
       dockerfile: Dockerfile
-    image: daskdev/dask
     hostname: dask-worker
     ports:
       - "8789:8789"
     command: ["bash", "-c", "/usr/bin/prepare.sh && exec dask-worker scheduler:8786"]
     volumes:
       - ./temp:/temp
+  # worker_two:
+  #   build:
+  #     context: ./base
+  #     dockerfile: Dockerfile
+  #   hostname: dask-worker
+  #   ports:
+  #     - "8790:8789"
+  #   command: ["bash", "-c", "/usr/bin/prepare.sh && exec dask-worker --nthreads 2 --memory-limit=4e9 scheduler:8786"]
+  #   volumes:
+  #     - ./temp:/temp
+  # worker_three:
+  #   build:
+  #     context: ./base
+  #     dockerfile: Dockerfile
+  #   hostname: dask-worker
+  #   ports:
+  #     - "8791:8789"
+  #   command: ["bash", "-c", "/usr/bin/prepare.sh && exec dask-worker --nthreads 2 --memory-limit=4e9 scheduler:8786"]
+  #   volumes:
+  #     - ./temp:/temp
+  # worker_four:
+  #   build:
+  #     context: ./base
+  #     dockerfile: Dockerfile
+  #   hostname: dask-worker
+  #   ports:
+  #     - "8792:8789"
+  #   command: ["bash", "-c", "/usr/bin/prepare.sh && exec dask-worker --nthreads 2 --memory-limit=4e9 scheduler:8786"]
+  #   volumes:
+  #     - ./temp:/temp
   notebook:
     build:
       context: .
       dockerfile: notebook/Dockerfile
-    image: daskdev/base-notebook
     hostname: notebook
     ports:
-      - "8889:8888"
+      - "8888:8888"
     volumes:
       - .:/home/jovyan
       - ./temp:/temp
