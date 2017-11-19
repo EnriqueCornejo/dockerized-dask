@@ -6,7 +6,7 @@ RUN apt-get update --fix-missing && apt-get install -y graphviz graphviz-dev
 USER $NB_USER
 
 RUN conda create -n dask --yes -c conda-forge \
-    dask distributed numpy scipy pandas numba nomkl fastparquet s3fs zict bcolz blosc cytoolz netCDF4 graphviz python-graphviz matplotlib \
+    dask distributed numpy scipy pandas numba nomkl fastparquet s3fs zict bcolz blosc cytoolz netCDF4 graphviz python-graphviz matplotlib memory_profiler \
     'notebook=5.0.*' \
     'jupyterhub=0.7.*' \
     'jupyterlab=0.24.*' \
