@@ -1,5 +1,8 @@
 FROM jupyter/base-notebook
 
+ENV NB_UID=1004
+ENV NB_GID=1005
+
 USER root
 RUN apt-get update --fix-missing && apt-get install -y graphviz graphviz-dev
 
@@ -17,10 +20,6 @@ ENV PATH=/opt/conda/envs/dask/bin:$PATH
 USER root
 COPY ./base/prepare.sh /usr/bin/prepare.sh
 RUN chmod +x /usr/bin/prepare.sh
-RUN mkdir /opt/app
-RUN chown -R $NB_USER:root /home/$NB_USER
-# RUN fix-permissions /home/$NB_USER
 
-USER $NB_USER
-
+RUN fix-permissions /home/$NB_USER
 CMD ["bash", "-c", "/usr/bin/prepare.sh && start-notebook.sh"]
