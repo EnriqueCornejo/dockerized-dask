@@ -1,7 +1,7 @@
 FROM jupyter/base-notebook
 
-ENV NB_UID=1004
-ENV NB_GID=1005
+# ENV NB_UID=1004
+# ENV NB_GID=1005
 
 USER root
 RUN apt-get update --fix-missing && apt-get install -y graphviz graphviz-dev
