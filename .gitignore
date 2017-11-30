@@ -4,4 +4,7 @@ work/.ipynb_checkpoints/*
 .ipython
 .jupyter
 .local
+work/credentials.json
 work/.*
+results/
+temp/
