@@ -11,6 +11,9 @@ RUN conda create -n dask --yes -c conda-forge \
     && conda clean -tipsy
 ENV PATH=/opt/conda/envs/dask/bin:$PATH
 
+RUN pip install --upgrade pip
+RUN pip install --upgrade google-cloud-storage
+
 COPY base/prepare.sh /usr/bin/prepare.sh
 RUN chmod +x /usr/bin/prepare.sh
 COPY work/baseline_tasmax_99p.npy /home/jovyan/work/baseline_tasmax_99p.npy
