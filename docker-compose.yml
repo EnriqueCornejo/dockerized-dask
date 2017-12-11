@@ -3,8 +3,8 @@ version: '3.1'
 services:
   scheduler:
     build:
-      context: ./base
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: base/Dockerfile
     hostname: dask-scheduler
     volumes:
       - ./temp:/temp
@@ -13,44 +13,14 @@ services:
       - "8787:8787"
   worker_one:
     build:
-      context: ./base
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: base/Dockerfile
     hostname: dask-worker
     ports:
       - "8789:8789"
     command: ["bash", "-c", "/usr/bin/prepare.sh && exec dask-worker scheduler:8786"]
     volumes:
       - ./temp:/temp
-  # worker_two:
-  #   build:
-  #     context: ./base
-  #     dockerfile: Dockerfile
-  #   hostname: dask-worker
-  #   ports:
-  #     - "8790:8789"
-  #   command: ["bash", "-c", "/usr/bin/prepare.sh && exec dask-worker --nthreads 2 --memory-limit=4e9 scheduler:8786"]
-  #   volumes:
-  #     - ./temp:/temp
-  # worker_three:
-  #   build:
-  #     context: ./base
-  #     dockerfile: Dockerfile
-  #   hostname: dask-worker
-  #   ports:
-  #     - "8791:8789"
-  #   command: ["bash", "-c", "/usr/bin/prepare.sh && exec dask-worker --nthreads 2 --memory-limit=4e9 scheduler:8786"]
-  #   volumes:
-  #     - ./temp:/temp
-  # worker_four:
-  #   build:
-  #     context: ./base
-  #     dockerfile: Dockerfile
-  #   hostname: dask-worker
-  #   ports:
-  #     - "8792:8789"
-  #   command: ["bash", "-c", "/usr/bin/prepare.sh && exec dask-worker --nthreads 2 --memory-limit=4e9 scheduler:8786"]
-  #   volumes:
-  #     - ./temp:/temp
   notebook:
     build:
       context: .
@@ -59,5 +29,19 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - .:/home/jovyan
+      - ./work:/home/jovyan/work
       - ./temp:/temp
+      - ./results:/results
+  api:
+    build:
+      context: .
+      dockerfile: base/Dockerfile
+    hostname: api
+    ports:
+      - "9001:8888"
+    command: ["bash", "-c", "jupyter kernelgateway --KernelGatewayApp.api=notebook-http --KernelGatewayApp.ip=0.0.0.0 --KernelGatewayApp.seed_uri='/home/jovyan/work/api.ipynb'"]
+    volumes:
+      - ./work:/home/jovyan/work
+      - ./temp:/temp
+      - ./results:/results
+    

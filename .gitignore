@@ -1,0 +1,10 @@
+work/.ipynb_checkpoints/*
+.cache
+.dask
+.ipython
+.jupyter
+.local
+work/credentials.json
+work/.*
+results/
+temp/

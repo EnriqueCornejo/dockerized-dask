@@ -1,5 +1,5 @@
 #!/bin/bash
-
+unset XDG_RUNTIME_DIR
 set -e
 set -x
 
